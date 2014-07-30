@@ -21,7 +21,7 @@ server = WEBrick::HTTPServer.new :Port => OPTS[:port]
 
 class Cmd < WEBrick::HTTPServlet::AbstractServlet
   def do_GET(request, response)
-    env = request.query
+    env = ENV.to_hash.merge(request.query)
     env["request-path"] = request.path
     request.each do |k, v|
       env[k] = v
