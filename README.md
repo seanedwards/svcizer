@@ -13,7 +13,7 @@ Now you have an HTTP server running on port 8080, which you can hit with GET req
 * Request headers and query parameters will be mapped to environment variables.
 * The request body will be passed to stdin.
 * HTTP headers and query parameters will be passed as environment variables.
-* `STDOUT` and `STDERR` from `cmd` will be dumped to the response body as `Content-Type: text/plain`.
+* `STDOUT` and `STDERR` from `cmd` will be dumped to the response body.
 * If the command returns 0, the server will return `200 OK`. If the command returns non-zero, the server will return `503 Internal Server Error`.
 * Any environment variable can be substituted into an argument by using `%var%`:
   
@@ -30,8 +30,8 @@ Now you have an HTTP server running on port 8080, which you can hit with GET req
 
 That's it. The end.
 
-FAQ
-===
+Potential FAQ
+=============
 
 "Security?"
 -----------
