@@ -21,11 +21,21 @@ server = WEBrick::HTTPServer.new :Port => OPTS[:port]
 class Cmd < WEBrick::HTTPServlet::AbstractServlet
   def do_GET(request, response)
     env = request.query
+    env["request-path"] = request.path
     request.each do |k, v|
       env[k] = v
     end
 
-    output, status = Open3.capture2e(env, *[*ARGV], :stdin_data => request.body)
+    cmd = ARGV.map do |arg|
+      arg.gsub(/%([A-Za-z0-9_\-]*?)%/) do |e|
+        puts "Performing replacement: #{e} #{env[$1]}"
+        env[$1] 
+      end
+    end
+
+    puts cmd
+
+    output, status = Open3.capture2e(env, *cmd, :stdin_data => request.body)
     response.body = output
     response["Content-Type"] = OPTS[:contenttype]
     return (status == 0 ? 200 : 503)
