@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require 'webrick'
+require 'open3'
+
+server = WEBrick::HTTPServer.new :Port => 8080
+
+class Cmd < WEBrick::HTTPServlet::AbstractServlet
+  def do_GET(request, response)
+    output, status = Open3.capture2e(*[*ARGV, request.path], :stdin_data => request.body)
+    response['Content-Type'] = "text/plain"
+    response.body = output
+    response["Content-Type"] = "text/plain"
+    return (status == 0 ? 200 : 503)
+  end
+end
+
+server.mount "/", Cmd
+server.start
+
