@@ -2,15 +2,32 @@
 
 require 'webrick'
 require 'open3'
+require 'trollop'
 
-server = WEBrick::HTTPServer.new :Port => 8080
+OPTS = Trollop::options do
+  banner "Usage: svcize [options] <cmd> [args...]"
+
+  opt :port, "The HTTP Port to listen to", :default => 8080, :type => :int
+  opt :contenttype, "The Content-Type header to return", :default => "text/plain", :type => :string
+end
+
+if ARGV.size == 0 then
+  warn "Missing command. Use svcize -h for more info."
+  exit 1
+end
+
+server = WEBrick::HTTPServer.new :Port => OPTS[:port]
 
 class Cmd < WEBrick::HTTPServlet::AbstractServlet
   def do_GET(request, response)
-    output, status = Open3.capture2e(*[*ARGV, request.path], :stdin_data => request.body)
-    response['Content-Type'] = "text/plain"
+    env = request.query
+    request.each do |k, v|
+      env[k] = v
+    end
+
+    output, status = Open3.capture2e(env, *[*ARGV], :stdin_data => request.body)
     response.body = output
-    response["Content-Type"] = "text/plain"
+    response["Content-Type"] = OPTS[:contenttype]
     return (status == 0 ? 200 : 503)
   end
 end
