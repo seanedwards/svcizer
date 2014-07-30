@@ -29,12 +29,11 @@ class Cmd < WEBrick::HTTPServlet::AbstractServlet
 
     cmd = ARGV.map do |arg|
       arg.gsub(/%([A-Za-z0-9_\-]*?)%/) do |e|
-        puts "Performing replacement: #{e} #{env[$1]}"
         env[$1] 
       end
     end
 
-    puts cmd
+    puts cmd.join(" ")
 
     output, status = Open3.capture2e(env, *cmd, :stdin_data => request.body)
     response.body = output
