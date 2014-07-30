@@ -1,7 +1,7 @@
 svcizer
 =======
 
-Turns a shell command into a plain HTTP endpoint. _There is no security._
+Recklessly turns a shell command into a plain HTTP endpoint. _There is no security._
 
 Usage
 =====
