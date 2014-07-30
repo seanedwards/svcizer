@@ -16,6 +16,7 @@ Now you have an HTTP server running on port 8080, which you can hit with GET req
 * `STDOUT` and `STDERR` from `cmd` will be dumped to the response body as `Content-Type: text/plain`.
 * If the command returns 0, the server will return `200 OK`. If the command returns non-zero, the server will return `503 Internal Server Error`.
 * Any environment variable can be substituted into an argument by using `%var%`:
+
       svcize ls %p%
 
   Now we can pass in an argument with the `p` query parameter:
