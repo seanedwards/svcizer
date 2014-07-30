@@ -38,7 +38,8 @@ class Cmd < WEBrick::HTTPServlet::AbstractServlet
     output, status = Open3.capture2e(env, *cmd, :stdin_data => request.body)
     response.body = output
     response["Content-Type"] = OPTS[:contenttype]
-    return (status == 0 ? 200 : 503)
+    response["Exit-Status"] = status.exitstatus
+    return (status.exitstatus == 0 ? 200 : 503)
   end
 end
 
