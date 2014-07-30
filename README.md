@@ -46,3 +46,7 @@ Delicious. But no.
 --------------
 You probably can't. This is a super basic tool for building the most micro of web services.
 
+"How do I perform maximum evil?"
+--------------------------------
+    svcize bash -c %cmd%
+
