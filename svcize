@@ -8,7 +8,7 @@ OPTS = Trollop::options do
   banner "Usage: svcize [options] <cmd> [args...]"
 
   opt :port, "The HTTP Port to listen to", :default => 8080, :type => :int
-  opt :contenttype, "The Content-Type header to return", :default => "text/plain", :type => :string
+  opt :type, "The Content-Type header to return", :default => "text/plain", :type => :string
 end
 
 if ARGV.size == 0 then
