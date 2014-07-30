@@ -6,6 +6,7 @@ require 'trollop'
 
 OPTS = Trollop::options do
   banner "Usage: svcize [options] <cmd> [args...]"
+  stop_on_unknown
 
   opt :port, "The HTTP Port to listen to", :default => 8080, :type => :int
   opt :type, "The Content-Type header to return", :default => "text/plain", :type => :string
