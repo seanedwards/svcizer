@@ -1,7 +1,7 @@
 svcizer
 =======
 
-Turns a shell command into an HTTP endpoint.
+Turns a shell command into a plain HTTP endpoint. _There is no security._
 
 Usage
 =====
@@ -12,9 +12,9 @@ Now you have an HTTP server running on port 8080, which you can hit with GET req
 
 * Request headers and query parameters will be mapped to environment variables.
 * The request body will be passed to stdin.
-* HTTP headers and query parameters will be passed as environment variables.
 * `STDOUT` and `STDERR` from `cmd` will be dumped to the response body.
 * If the command returns 0, the server will return `200 OK`. If the command returns non-zero, the server will return `503 Internal Server Error`.
+* HTTP headers and query parameters will be passed as environment variables. Yes, this means you can overwrite `$PATH`. Do it if you want. _There is no security._
 * Any environment variable can be substituted into an argument by using `%var%`:
   
       `svcize ls %p%`
@@ -35,9 +35,13 @@ Potential FAQ
 
 "Security?"
 -----------
-There isn't any.
+_There is no security._
 
-"How do I...?"
+"Cookies?"
+----------
+Delicious. But no.
+
+"What about...?"
 --------------
-If it's not obvious, this probably isn't the tool you're looking for.
+You probably can't. This is a super basic tool for building the most micro of web services.
 
